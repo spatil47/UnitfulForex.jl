@@ -17,7 +17,8 @@ end
 rates = (JSON.parse ∘ request)("https://api.exchangeratesapi.io/latest")["rates"]
 
 for rate ∈ rates
-    @eval @unit $(rate[1]) "$(rate[1])" $(rate[1]) (1/$(rate[2]))*EUR true
+    curr = :(@unit $(rate[1]) $(rate[1]) $(rate[1]) (1/$(rate[2]))*EUR false)
+    eval(curr)
 end
 
 end
